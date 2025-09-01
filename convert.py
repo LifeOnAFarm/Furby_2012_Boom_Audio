@@ -13,7 +13,7 @@ files = os.listdir('a18_files')
 
 for f in files:
     inpath = os.path.join('a18_files', f)
-    basename, _ = os.path.splitext(f)   # split off extension
+    basename, _ = os.path.splitext(f)
     outpath = os.path.join('wavs', basename + '.wav')
     print(f"Converting {f} -> {basename}.wav")
     decfunc(infile=LPCSTR(inpath.encode('ascii')), outfile=LPCSTR(outpath.encode('ascii')))

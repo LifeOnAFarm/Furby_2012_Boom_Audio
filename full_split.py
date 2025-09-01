@@ -53,6 +53,7 @@ def extract_audio_tracks(rom_data, offsets):
 def extract_images(rom_path, offsets, audio_offsets):
     """Extract 256-byte image records, skipping audio offsets."""
     os.makedirs("imgs", exist_ok=True)
+    image_count = 0
     
     with open(rom_path, "rb") as f:
         for i, start in enumerate(offsets):
@@ -80,9 +81,9 @@ def extract_images(rom_path, offsets, audio_offsets):
                     pos = x_offsets[w] + y_offsets[h]
                     bit = bits[pos]
                     pixels[w, h] = (255, 255, 255) if bit else (0, 0, 0)
-            
-            img = img.transpose(Image.FLIP_TOP_BOTTOM)
-            img.save(f"imgs/img_{start:06X}.bmp")
+            image_count += 1
+            img = img.transpose(Image.FLIP_TOP_BOTTOM).transpose(Image.FLIP_LEFT_RIGHT)
+            img.save(f"imgs/img_{image_count:04d}.bmp")
             print(f"Extracted image at offset {hex(start)}")
 
 def main():
