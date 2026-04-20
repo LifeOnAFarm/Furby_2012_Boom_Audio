@@ -1,2 +1,12 @@
-You can find the audio and image files from the Dutch 2012, English 2012, French 2012, English Boom, French Boom, English Crystal (same as the Boom) and Furbacca under the "Furby Exported Files" folder. The rest of the code is for extacting and replacing audio adn images into the binary, which I will some day document 
+You can find the audio and image files from the Dutch 2012, English 2012, French 2012, English Boom, French Boom, English Crystal (same as the Boom) and Furbacca under the "Furby Exported Files" folder. The rest of the code is for extacting and replacing audio adn images into the binary, which I will some day document
+
+
 ![til](https://github.com/LifeOnAFarm/Furby_2012_Boom_Audio/blob/003ba831338548cdba9973b5421e0e20155f2e77/2012-Eyes-Big.gif)
+
+
+
+![til](https://github.com/LifeOnAFarm/Furby_2012_Boom_Audio/blob/774c1bd3997c3e95ca514c81067b95e8a9dacb30/Boom-Eyes-Big.gif)
+
+
+
+![til](https://github.com/LifeOnAFarm/Furby_2012_Boom_Audio/blob/774c1bd3997c3e95ca514c81067b95e8a9dacb30/Furbacca-Eyes-Big.gif)
