@@ -4,7 +4,6 @@
 
 It extracts audio and image assets from Furby ROM binaries, converts Furby image records to and from BMP, decodes bundled `.a18` audio to WAV without the old 32-bit DLL dependency, and rebuilds ROMs from edited assets.
 
-<<<<<<< HEAD
 ## Current Features
 
 - Inspect a ROM and summarize its records
@@ -122,19 +121,3 @@ Install dev extras and run tests:
 pip install -e .[dev]
 pytest
 ```
-
-## Contributing
-
-See [CONTRIBUTING.md](D:\Codex FurbyDumper\furby_project\CONTRIBUTING.md:1) for the lightweight development workflow.
-
-## License
-
-This project is licensed under the [MIT License](D:\Codex FurbyDumper\furby_project\LICENSE:1).
-
-## Notes
-
-- The bundled A1800 decoder removes the old 32-bit Python requirement for decoding `.a18` audio.
-- Encoding WAV back to `.a18` is still a future task for this package.
-- The original workspace still contains older prototype scripts and experiments; this folder is the cleaned CLI-focused package.
-=======
->>>>>>> 841f8f50de2609e6d4b0563977fbca8c9cfbef4f
