@@ -1,8 +1,8 @@
 # Furby Project
 
-`furby-project` is a Python CLI for working with Furby Boom / 2012 ROM dumps.
+Python CLI for working with Furby Boom / 2012 ROM dumps.
 
-It extracts audio and image assets from Furby ROM binaries, converts Furby image records to and from BMP, decodes bundled `.a18` audio to WAV without the old 32-bit DLL dependency, and rebuilds ROMs from edited assets.
+It can inspect ROMs, extract assets, convert images, convert audio between `.wav` and `.a18`, and rebuild ROM files.
 
 There is extracted audio and images for the following Furbys in Furby Exported Files/:
 
@@ -23,14 +23,6 @@ There is extracted audio and images for the following Furbys in Furby Exported F
 ### Furbacca Eyes
 ![Furbacca Eyes](https://github.com/LifeOnAFarm/Furby_2012_Boom_Audio/blob/774c1bd3997c3e95ca514c81067b95e8a9dacb30/Furbacca-Eyes-Big.gif)
 
-## Current Features
-
-- Inspect a ROM and summarize its records
-- Extract `.a18` audio records from a ROM
-- Export image records as `.bmp` or raw `.bin`
-- Convert BMP files back into Furby image-record `.bin` files
-- Decode a single `.a18` file or every audio record in a ROM to WAV
-- Rebuild a ROM from image and audio asset folders
 
 ## Install
 
@@ -38,9 +30,7 @@ There is extracted audio and images for the following Furbys in Furby Exported F
 pip install -e .
 ```
 
-Image commands require `Pillow`, which is included in the default dependencies.
-
-## CLI Usage
+## Commands
 
 Inspect a ROM:
 
@@ -48,35 +38,48 @@ Inspect a ROM:
 furby inspect path/to/combined_rom.bin --limit 10
 ```
 
-Extract assets:
+Extract audio and images from a ROM:
 
 ```bash
 furby extract path/to/combined_rom.bin --out extracted_assets
 ```
 
-Export images as BMP:
+Export image records as BMP:
 
 ```bash
 furby export-images path/to/combined_rom.bin --out images --format bmp
 ```
 
-Decode audio to WAV:
+Convert BMP files back to Furby image records:
+
+```bash
+furby import-images path/to/bmps --out converted_bins
+```
+
+Decode `.a18` to WAV:
 
 ```bash
 furby export-audio-wav path/to/audio0001.a18 --out audio0001.wav
 furby export-audio-wav path/to/combined_rom.bin --out exported_wavs
 ```
 
-Build a ROM:
+Encode WAV to `.a18`:
+
+```bash
+furby encode-audio-a18 path/to/audio.wav --out audio.a18
+furby encode-audio-a18 path/to/wav_folder --out converted_a18
+```
+
+Build a ROM from image and audio folders:
 
 ```bash
 furby build --images converted_bins --audio converted_a18 --out rebuilt.bin --padding-mode 4k
+furby build --images converted_bins --audio convert_wavs --out rebuilt.bin --audio-bitrate 16000
 ```
 
-## Project Layout
+`build` accepts audio folders containing `.a18`, `.wav`, or both. WAV files are auto-encoded during the build.
 
-- `src/furby_tool/`: reusable library and CLI code
-- `src/furby_tool/_a1800/`: bundled pure-Python A1800 decoder
-- `tests/`: small smoke tests for ROM parsing and ROM building
-- `ARCHITECTURE.md`: notes on how the prototype scripts map into the package
-- `ROADMAP.md`: next milestones for the project
+
+## Notes
+
+- WAV input for `.a18` encoding currently expects 16-bit PCM at 16000 Hz. Stereo input is downmixed to mono.

@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from .audio import decode_a18_to_wav, export_rom_audio_as_wav
+from .audio import decode_a18_to_wav, encode_wav_to_a18, export_rom_audio_as_wav
 from .builder import build_rom
 from .extract import export_rom_images, extract_rom_assets
 from .images import convert_bmp_file_to_record
@@ -50,10 +50,13 @@ def cmd_build(args: argparse.Namespace) -> int:
         audio_folder=args.audio,
         output_path=args.out,
         padding_size=padding_size,
+        audio_bitrate=args.audio_bitrate,
     )
     print(f"Built ROM: {result.output_path}")
     print(f"Records: {result.record_count}")
     print(f"Audio files: {result.audio_count}")
+    print(f"A18 audio files: {result.a18_audio_count}")
+    print(f"WAV audio files encoded: {result.wav_audio_count}")
     print(f"Image files: {result.image_count}")
     print(f"Header size: {result.header_size}")
     print(f"Padding size: {result.padding_size}")
@@ -103,6 +106,29 @@ def cmd_export_audio_wav(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_encode_audio_a18(args: argparse.Namespace) -> int:
+    input_path = Path(args.input)
+    if input_path.is_file():
+        output_path = Path(args.out)
+        encode_wav_to_a18(input_path, output_path, bitrate=args.bitrate)
+        print(f"Encoded A18: {output_path.resolve()}")
+        print(f"Bitrate: {args.bitrate}")
+        return 0
+
+    output_dir = Path(args.out)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    count = 0
+    for path in sorted(input_path.iterdir()):
+        if not path.is_file() or path.suffix.lower() != ".wav":
+            continue
+        count += 1
+        encode_wav_to_a18(path, output_dir / f"{path.stem}.a18", bitrate=args.bitrate)
+    print(f"Encoded A18 files: {count}")
+    print(f"Bitrate: {args.bitrate}")
+    print(f"Output directory: {output_dir.resolve()}")
+    return 0
+
+
 def resolve_padding(mode: str, explicit_padding: int | None) -> int:
     if explicit_padding is not None:
         return explicit_padding
@@ -132,6 +158,12 @@ def build_parser() -> argparse.ArgumentParser:
     build_parser_cmd.add_argument("--audio", required=True)
     build_parser_cmd.add_argument("--out", required=True)
     build_parser_cmd.add_argument("--padding", type=int)
+    build_parser_cmd.add_argument(
+        "--audio-bitrate",
+        type=int,
+        default=16000,
+        help="Bitrate to use when WAV files are auto-encoded during build",
+    )
     build_parser_cmd.add_argument(
         "--padding-mode",
         choices=["none", "4k"],
@@ -170,6 +202,15 @@ def build_parser() -> argparse.ArgumentParser:
     export_audio_parser.add_argument("--out", required=True)
     export_audio_parser.add_argument("--sample-rate", type=int, default=16000)
     export_audio_parser.set_defaults(func=cmd_export_audio_wav)
+
+    encode_audio_parser = subparsers.add_parser(
+        "encode-audio-a18",
+        help="Encode a WAV file or folder of WAV files to A18",
+    )
+    encode_audio_parser.add_argument("input")
+    encode_audio_parser.add_argument("--out", required=True)
+    encode_audio_parser.add_argument("--bitrate", type=int, default=16000)
+    encode_audio_parser.set_defaults(func=cmd_encode_audio_a18)
 
     return parser
 
