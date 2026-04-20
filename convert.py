@@ -11,6 +11,7 @@ os.makedirs('wavs', exist_ok=True)
 
 files = os.listdir('a18_files')
 
+
 for f in files:
     inpath = os.path.join('a18_files', f)
     basename, _ = os.path.splitext(f)

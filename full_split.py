@@ -15,6 +15,7 @@ y_offsets = [960, 896, 832, 768, 704, 640, 576, 512, 448, 384, 320, 256,
 def get_bits(byte):
     """Convert a byte into a list of 8 bits (MSB first)."""
     return [(byte >> i) & 1 for i in reversed(range(8))]
+    #return [(byte >> i) & 1 for i in range(8)]  # LSB first
 
 def analyze_header(rom_data):
     """Read offsets from the ROM header."""
