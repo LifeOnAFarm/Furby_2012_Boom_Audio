@@ -14,7 +14,6 @@ It extracts audio and image assets from Furby ROM binaries, converts Furby image
 - Rebuild a ROM from image and audio asset folders
 =======
 There is extracted audio and images for the following Furbys in Furby Exported Files/:
->>>>>>> 841f8f50de2609e6d4b0563977fbca8c9cfbef4f
 
 ## Install
 
@@ -41,7 +40,6 @@ furby extract path/to/combined_rom.bin --out extracted_assets
 =======
 ### Furby 2012 Eyes
 ![Furby 2012 Eyes](https://github.com/LifeOnAFarm/Furby_2012_Boom_Audio/blob/003ba831338548cdba9973b5421e0e20155f2e77/2012-Eyes-Big.gif)
->>>>>>> 841f8f50de2609e6d4b0563977fbca8c9cfbef4f
 
 Export images as BMP:
 
