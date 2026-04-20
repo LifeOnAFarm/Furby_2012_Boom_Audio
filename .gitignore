@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+audio0001_cli.wav
+github_ready_check.wav
+exported_bins/
+exported_wavs/
+extract_fail_demo/
+extracted/
+extracted_audio/
